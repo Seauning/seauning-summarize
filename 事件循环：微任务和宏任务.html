@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://zh.javascript.info/event-loop -->
+<html lang="zh" data-theme-enabled="1" data-theme="light" class="working-hover"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>window.currentUser = null;</script><script>window.rateUsdToNative = 6.342633;</script><title itemprop="name">事件循环：微任务和宏任务</title><link href="./事件循环：微任务和宏任务_files/styles.64367831d404c792142c.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><!-- chrome autotranslate is enabled only for "en" main version--><meta name="google" content="notranslate"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="./事件循环：微任务和宏任务_files/css" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="https://zh.javascript.info/img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="https://zh.javascript.info/event-loop"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="https://zh.javascript.info/img/favicon/favicon.png"><meta itemprop="image" content="https://zh.javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="事件循环：微任务和宏任务"><meta property="og:image" content="https://zh.javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="事件循环：微任务和宏任务"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://zh.javascript.info/img/site_preview_en_512x512.png"><link rel="prev" href="https://zh.javascript.info/selection-range"><link rel="next" href="https://zh.javascript.info/frames-and-windows"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 65598091;</script><script>window.GoogleAnalyticsObject="ga",window.ga=function(){window.ga.q.push(arguments)},window.ga.q=[],window.ga.l=Date.now(),ga("create",GA_ID,"auto"),window.GTM_ID&&ga("require",GTM_ID),window.currentUser?ga("set","&uid",currentUser.id):ga("set","anonymizeIp",!0),window.addEventListener("error",function(e){var r=(e.filename||e.errorUrl)+": "+(e.lineno||e.errorLine),n=e.stack||e.error&&e.error.stack;ga("send","exception",{exDescription:e.message+" "+r+" "+n,exFatal:!0})});</script><script src="./事件循环：微任务和宏任务_files/analytics.js.下载" async=""></script><script>ga('send', 'pageview');</script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="./事件循环：微任务和宏任务_files/watch.js.下载" async=""></script><script>window.RECAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script src="./事件循环：微任务和宏任务_files/init.f551d10c469632252be6.js.下载"></script><script src="./事件循环：微任务和宏任务_files/head.72cc81bd06fe5506b8cb.js.下载" defer=""></script><meta property="og:title" content="事件循环：微任务和宏任务"><meta property="og:type" content="article"><script src="./事件循环：微任务和宏任务_files/tutorial.0085805d53a665cf3a7e.js.下载" defer="" data-manual="1"></script><script src="./事件循环：微任务和宏任务_files/footer.b5edaae5b6e4efe79394.js.下载" defer=""></script></head><body class=""><script>window.fontTest();</script><span class="font-test" style=""></span><div class="page-wrapper"><!--[if IE]><div style="color:red;text-align:center">很抱歉，我们不支持 Internet Explorer 等浏览器，请使用一个更新版本的浏览器。</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "zh";</script><script>{let t=navigator.languages||[];t=t.map(t=>t.toLowerCase());let o,i,n=[];for(let o of window.langs)for(let i of t)if(i===o.code||i.startsWith(o.code+"-")){n.push(o);break}if(!o&&"ru"!=lang&&"en"!=lang){n.find(t=>"en"==t.code)&&(o=`\n            According to your browser headers, you know English. Please help to <a href="https://github.com/javascript-tutorial/${lang}.javascript.info#readme">translate the tutorial</a>.\n            Thank you!\n          `,i="notify-translate-tutorial-local")}if(o){let t=`<div class="notification notification_top notification_info sitetoolbar__notification" style="display:none" id="${i}">\n          <div class="notification__content">${o}</div>\n          <button class="notification__close" title="Close"></button>\n        </div>`;document.write(t),showTopNotification()}}</script><div class="notification notification_top notification_info sitetoolbar__notification" style="" id="notify-translate-tutorial-local">
+          <div class="notification__content">
+            According to your browser headers, you know English. Please help to <a href="https://github.com/javascript-tutorial/zh.javascript.info#readme">translate the tutorial</a>.
+          </div>
+          <button class="notification__close" title="Close"></button>
+        </div><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler="">ZH</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://javascript.info/event-loop"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://es.javascript.info/event-loop"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/event-loop"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/event-loop"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/event-loop"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/event-loop"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/event-loop"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="https://zh.javascript.info/event-loop"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text">我们希望将这个开源项目提供给全世界的人。请帮助我们将教程的内容 <a href="https://github.com/javascript-tutorial/translate" rel="noopener noreferrer" target="_blank">翻译为你所掌握的语言</a> 对应的版本。</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="https://zh.javascript.info/"><object type="image/svg+xml" class="sitetoolbar__logo sitetoolbar__logo_normal" data="./事件循环：微任务和宏任务_files/sitetoolbar__logo_en.svg" style="left: 0px; top: 0px; position: absolute;"></object><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="./事件循环：微任务和宏任务_files/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation" style="visibility: hidden;"><object type="image/svg+xml" class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" data="./事件循环：微任务和宏任务_files/sitetoolbar__logo_en-white.svg" style="left: 0px; top: 0px; position: absolute;"></object><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="./事件循环：微任务和宏任务_files/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"><object type="image/svg+xml" class="sitetoolbar__logo sitetoolbar__logo_small" data="./事件循环：微任务和宏任务_files/sitetoolbar__logo_small_en.svg" style="left: 0px; top: 0px; position: absolute;"></object><img class="sitetoolbar__logo sitetoolbar__logo_small" src="./事件循环：微任务和宏任务_files/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"><object type="image/svg+xml" class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" data="./事件循环：微任务和宏任务_files/sitetoolbar__logo_small_en-white.svg" style="left: 0px; top: 0px; position: absolute;"></object><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="./事件循环：微任务和宏任务_files/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__book-wrap"><a class="buy-book-button" href="https://zh.javascript.info/ebook"><span class="buy-book-button__extra-text">购买</span>EPUB/PDF</a></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://zh.javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="在 Javascript.info 网站中搜索" required="required" type="text"></div><button class="sitetoolbar__find" type="submit">搜索</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://zh.javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="在教程中搜索" required="required"><button class="tablet-menu-search__button" type="submit" name="type" value="articles">搜索</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="https://zh.javascript.info/tutorial/map" data-action="tutorial-map"><span class="map__text">教程路线图</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">分享</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/">عربي</option><option value="https://javascript.info/event-loop">English</option><option value="https://es.javascript.info/event-loop">Español</option><option value="https://fr.javascript.info/">Français</option><option value="https://id.javascript.info/">Indonesia</option><option value="https://it.javascript.info/event-loop">Italiano</option><option value="https://ja.javascript.info/event-loop">日本語</option><option value="https://ko.javascript.info/event-loop">한국어</option><option value="https://learn.javascript.ru/event-loop">Русский</option><option value="https://tr.javascript.info/event-loop">Türkçe</option><option value="https://uk.javascript.info/">Українська</option><option value="https://zh.javascript.info/event-loop" selected="">简体中文</option></select></div></div></div><div style="width: 1266px; margin: 0px; position: static; height: 3px;"></div></div><div class="page page_inner_padding page_sidebar-animation-on"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="https://zh.javascript.info/"><span class="breadcrumbs__hidden-text">教程</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="https://zh.javascript.info/ui"><span>浏览器：文档，事件，接口</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="https://zh.javascript.info/ui-misc"><span>杂项</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"教程","item":"https://zh.javascript.info/"},{"@type":"ListItem","position":2,"name":"浏览器：文档，事件，接口","item":"https://zh.javascript.info/ui"},{"@type":"ListItem","position":3,"name":"杂项","item":"https://zh.javascript.info/ui-misc"}]}</script></ol><div class="updated-at" data-tooltip="最后修改在 15日 十二月 2021"><div class="updated-at__content">15日 十二月 2021</div></div></div><h1 class="main__header-title">事件循环：微任务和宏任务</h1></div></header><div class="content"><article class="formatted" itemscope="" itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="事件循环：微任务和宏任务"><div itemprop="author" itemscope="" itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><p>浏览器中 JavaScript 的执行流程和 Node.js 中的流程都是基于 <strong>事件循环</strong> 的。</p>
+<p>理解事件循环的工作方式对于代码优化很重要，有时对于正确的架构也很重要。</p>
+<p>在本章中，我们首先介绍事件循环工作方式的理论细节，然后介绍该知识的实际应用。</p>
+<h2><a class="main__anchor" name="shi-jian-xun-huan" href="https://zh.javascript.info/event-loop#shi-jian-xun-huan">事件循环</a></h2><p><strong>事件循环</strong> 的概念非常简单。它是一个在 JavaScript 引擎等待任务，执行任务和进入休眠状态等待更多任务这几个状态之间转换的无限循环。</p>
+<p>引擎的一般算法：</p>
+<ol>
+<li>当有任务时：
+<ul>
+<li>从最先进入的任务开始执行。</li>
+</ul>
+</li>
+<li>休眠直到出现任务，然后转到第 1 步。</li>
+</ol>
+<p>当我们浏览一个网页时就是上述这种形式。JavaScript 引擎大多数时候不执行任何操作，它仅在脚本/处理程序/事件激活时执行。</p>
+<p>任务示例：</p>
+<ul>
+<li>当外部脚本 <code>&lt;script src="..."&gt;</code> 加载完成时，任务就是执行它。</li>
+<li>当用户移动鼠标时，任务就是派生出 <code>mousemove</code> 事件和执行处理程序。</li>
+<li>当安排的（scheduled）<code>setTimeout</code> 时间到达时，任务就是执行其回调。</li>
+<li>……诸如此类。</li>
+</ul>
+<p>设置任务 —— 引擎处理它们 —— 然后等待更多任务（即休眠，几乎不消耗 CPU 资源）。</p>
+<p>一个任务到来时，引擎可能正处于繁忙状态，那么这个任务就会被排入队列。</p>
+<p>多个任务组成了一个队列，即所谓的“宏任务队列”（v8 术语）：</p>
+<figure><div class="image" style="width:479px">
+      <div class="image__ratio" style="padding-top:58.24634655532359%"></div>
+      <object type="image/svg+xml" data="./事件循环：微任务和宏任务_files/eventLoop.svg" width="479" height="279" class="image__image" data-use-theme="">
+        <img src="./事件循环：微任务和宏任务_files/eventLoop.svg" alt="" width="479" height="279">
+      </object>
+      </div></figure><p>例如，当引擎正在忙于执行一段 <code>script</code> 时，用户可能会移动鼠标而产生 <code>mousemove</code> 事件，<code>setTimeout</code> 或许也刚好到期，以及其他任务，这些任务组成了一个队列，如上图所示。</p>
+<p>队列中的任务基于“先进先出”的原则执行。当浏览器引擎执行完 <code>script</code> 后，它会处理 <code>mousemove</code> 事件，然后处理 <code>setTimeout</code> 处理程序，依此类推。</p>
+<p>到目前为止，很简单，对吧？</p>
+<p>两个细节：</p>
+<ol>
+<li>引擎执行任务时永远不会进行渲染（render）。如果任务执行需要很长一段时间也没关系。仅在任务完成后才会绘制对 DOM 的更改。</li>
+<li>如果一项任务执行花费的时间过长，浏览器将无法执行其他任务，例如处理用户事件。因此，在一定时间后，浏览器会抛出一个如“页面未响应”之类的警报，建议你终止这个任务。这种情况常发生在有大量复杂的计算或导致死循环的程序错误时。</li>
+</ol>
+<p>以上是理论知识。现在，让我们来看看如何应用这些知识。</p>
+<h2><a class="main__anchor" name="yong-li-1-chai-fen-cpu-guo-zai-ren-wu" href="https://zh.javascript.info/event-loop#yong-li-1-chai-fen-cpu-guo-zai-ren-wu">用例 1：拆分 CPU 过载任务</a></h2><p>假设我们有一个 CPU 过载任务。</p>
+<p>例如，语法高亮（用来给本页面中的示例代码着色）是相当耗费 CPU 资源的任务。为了高亮显示代码，它执行分析，创建很多着了色的元素，然后将它们添加到文档中 —— 对于文本量大的文档来说，需要耗费很长时间。</p>
+<p>当引擎忙于语法高亮时，它就无法处理其他 DOM 相关的工作，例如处理用户事件等。它甚至可能会导致浏览器“中断（hiccup）”甚至“挂起（hang）”一段时间，这是不可接受的。</p>
+<p>我们可以通过将大任务拆分成多个小任务来避免这个问题。高亮显示前 100 行，然后使用 <code>setTimeout</code>（延时参数为 0）来安排（schedule）后 100 行的高亮显示，依此类推。</p>
+<p>为了演示这种方法，简单起见，让我们写一个从 <code>1</code> 数到 <code>1000000000</code> 的函数，而不写文本高亮。</p>
+<p>如果你运行下面这段代码，你会看到引擎会“挂起”一段时间。对于服务端 JS 来说这显而易见，并且如果你在浏览器中运行它，尝试点击页面上其他按钮时，你会发现在计数结束之前不会处理其他事件。</p>
+<div id="4qxqkaglj2" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="运行" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-javascript" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-javascript"><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> start <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// 做一个繁重的任务</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">1e9</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    i<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"Done in "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'ms'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+      
+      </div><p>浏览器甚至可能会显示一个“脚本执行时间过长”的警告。</p>
+<p>让我们使用嵌套的 <code>setTimeout</code> 调用来拆分这个任务：</p>
+<div id="qcrbzz3ybk" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="运行" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-javascript" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-javascript"><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> start <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// 做繁重的任务的一部分 (*)</span>
+  <span class="token keyword">do</span> <span class="token punctuation">{</span>
+    i<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">1e6</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">1e9</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"Done in "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'ms'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 安排（schedule）新的调用 (**)</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+      
+      </div><p>现在，浏览器界面在“计数”过程中可以正常使用。</p>
+<p>单次执行 <code>count</code> 会完成工作 <code>(*)</code> 的一部分，然后根据需要重新安排（schedule）自身的执行 <code>(**)</code>：</p>
+<ol>
+<li>首先执行计数：<code>i=1...1000000</code>。</li>
+<li>然后执行计数：<code>i=1000001..2000000</code>。</li>
+<li>……以此类推。</li>
+</ol>
+<p>现在，如果在引擎忙于执行第一部分时出现了一个新的副任务（例如 <code>onclick</code> 事件），则该任务会被排入队列，然后在第一部分执行结束时，并在下一部分开始执行前，会执行该副任务。周期性地在两次 <code>count</code> 执行期间返回事件循环，这为 JavaScript 引擎提供了足够的“空气”来执行其他操作，以响应其他的用户行为。</p>
+<p>值得注意的是这两种变体 —— 是否使用了 <code>setTimeout</code> 对任务进行拆分 —— 在执行速度上是相当的。在执行计数的总耗时上没有多少差异。</p>
+<p>为了使两者耗时更接近，让我们来做一个改进。</p>
+<p>我们将要把调度（scheduling）移动到 <code>count()</code> 的开头：</p>
+<div id="q2abcj8u9k" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="运行" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-javascript" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-javascript"><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> start <span class="token operator">=</span> Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+  <span class="token comment">// 将调度（scheduling）移动到开头</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">1e9</span> <span class="token operator">-</span> <span class="token number">1e6</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 安排（schedule）新的调用</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">do</span> <span class="token punctuation">{</span>
+    i<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">1e6</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">1e9</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"Done in "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>Date<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'ms'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+      
+      </div><p>现在，当我们开始调用 <code>count()</code> 时，会看到我们需要对 <code>count()</code> 进行更多调用，我们就会在工作前立即安排（schedule）它。</p>
+<p>如果你运行它，你很容易注意到它花费的时间明显减少了。</p>
+<p>为什么？</p>
+<p>这很简单：你应该还记得，多个嵌套的 <code>setTimeout</code> 调用在浏览器中的最小延迟为 4ms。即使我们设置了 <code>0</code>，但还是 <code>4ms</code>（或者更久一些）。所以我们安排（schedule）得越早，运行速度也就越快。</p>
+<p>最后，我们将一个繁重的任务拆分成了几部分，现在它不会阻塞用户界面了。而且其总耗时并不会长很多。</p>
+<h2><a class="main__anchor" name="yong-li-2-jin-du-zhi-shi" href="https://zh.javascript.info/event-loop#yong-li-2-jin-du-zhi-shi">用例 2：进度指示</a></h2><p>对浏览器脚本中的过载型任务进行拆分的另一个好处是，我们可以显示进度指示。</p>
+<p>正如前面所提到的，仅在当前运行的任务完成后，才会对 DOM 中的更改进行绘制，无论这个任务运行花费了多长时间。</p>
+<p>从一方面讲，这非常好，因为我们的函数可能会创建很多元素，将它们一个接一个地插入到文档中，并更改其样式 —— 访问者不会看到任何未完成的“中间态”内容。很重要，对吧？</p>
+<p>这是一个示例，对 <code>i</code> 的更改在该函数完成前不会显示出来，所以我们将只会看到最后的值：</p>
+<div id="fbfg4jilln" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="展示" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-markup" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>progress<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+
+  <span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1e6</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      i<span class="token operator">++</span><span class="token punctuation">;</span>
+      progress<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre>
+        </div>
+      </div>
+      
+      </div><p>……但是我们也可能想在任务执行期间展示一些东西，例如进度条。</p>
+<p>如果我们使用 <code>setTimeout</code> 将繁重的任务拆分成几部分，那么变化就会被在它们之间绘制出来。</p>
+<p>这看起来更好看：</p>
+<div id="kpz3gum4y4" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="展示" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-markup" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>progress<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 做繁重的任务的一部分 (*)</span>
+    <span class="token keyword">do</span> <span class="token punctuation">{</span>
+      i<span class="token operator">++</span><span class="token punctuation">;</span>
+      progress<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">1e3</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">1e7</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">setTimeout</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+
+  <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre>
+        </div>
+      </div>
+      
+      <div class="code-result code-example__result"><iframe name="kpz3gum4y4" class="code-result__iframe" style="display: block; height: 37px;" src="./事件循环：微任务和宏任务_files/saved_resource.html"></iframe></div></div><p>现在 <code>div</code> 显示了 <code>i</code> 的值的增长，这就是进度条的一种。</p>
+<h2><a class="main__anchor" name="yong-li-3-zai-shi-jian-zhi-hou-zuo-yi-xie-shi-qing" href="https://zh.javascript.info/event-loop#yong-li-3-zai-shi-jian-zhi-hou-zuo-yi-xie-shi-qing">用例 3：在事件之后做一些事情</a></h2><p>在事件处理程序中，我们可能会决定推迟某些行为，直到事件冒泡并在所有级别上得到处理后。我们可以通过将该代码包装到零延迟的 <code>setTimeout</code> 中来做到这一点。</p>
+<p>在 <a href="https://zh.javascript.info/dispatch-events">创建自定义事件</a> 一章中，我们看到过这样一个例子：自定义事件 <code>menu-open</code> 被在 <code>setTimeout</code> 中分派（dispatched），所以它在 <code>click</code> 事件被处理完成之后发生。</p>
+<div id="lkl61h752r" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-javascript" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-javascript">menu<span class="token punctuation">.</span><span class="token function-variable function">onclick</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// ...</span>
+
+  <span class="token comment">// 创建一个具有被点击的菜单项的数据的自定义事件</span>
+  <span class="token keyword">let</span> customEvent <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CustomEvent</span><span class="token punctuation">(</span><span class="token string">"menu-open"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    bubbles<span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 异步分派（dispatch）自定义事件</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> menu<span class="token punctuation">.</span><span class="token function">dispatchEvent</span><span class="token punctuation">(</span>customEvent<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="hong-ren-wu-he-wei-ren-wu" href="https://zh.javascript.info/event-loop#hong-ren-wu-he-wei-ren-wu">宏任务和微任务</a></h2><p>除了本章中所讲的 <strong>宏任务（macrotask）</strong> 外，还有在 <a href="https://zh.javascript.info/microtask-queue">微任务（Microtask）</a> 一章中提到的 <strong>微任务（microtask）</strong>。</p>
+<p>微任务仅来自于我们的代码。它们通常是由 promise 创建的：对 <code>.then/catch/finally</code> 处理程序的执行会成为微任务。微任务也被用于 <code>await</code> 的“幕后”，因为它是 promise 处理的另一种形式。</p>
+<p>还有一个特殊的函数 <code>queueMicrotask(func)</code>，它对 <code>func</code> 进行排队，以在微任务队列中执行。</p>
+<p><strong>每个宏任务之后，引擎会立即执行微任务队列中的所有任务，然后再执行其他的宏任务，或渲染，或进行其他任何操作。</strong></p>
+<p>例如，看看下面这个示例：</p>
+<div id="n5hz33fvs2" data-trusted="1" class="code-example" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="运行" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-javascript" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-javascript"><span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"timeout"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"promise"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"code"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+      
+      </div><p>这里的执行顺序是怎样的？</p>
+<ol>
+<li><code>code</code> 首先显示，因为它是常规的同步调用。</li>
+<li><code>promise</code> 第二个出现，因为 <code>then</code> 会通过微任务队列，并在当前代码之后执行。</li>
+<li><code>timeout</code> 最后显示，因为它是一个宏任务。</li>
+</ol>
+<p>更详细的事件循环图示如下（顺序是从上到下，即：首先是脚本，然后是微任务，渲染等）：</p>
+<figure><div class="image" style="width:407px">
+      <div class="image__ratio" style="padding-top:96.06879606879608%"></div>
+      <object type="image/svg+xml" data="./事件循环：微任务和宏任务_files/eventLoop-full.svg" width="407" height="391" class="image__image" data-use-theme="">
+        <img src="./事件循环：微任务和宏任务_files/eventLoop-full.svg" alt="" width="407" height="391">
+      </object>
+      </div></figure><p>微任务会在执行任何其他事件处理，或渲染，或执行任何其他宏任务之前完成。</p>
+<p>这很重要，因为它确保了微任务之间的应用程序环境基本相同（没有鼠标坐标更改，没有新的网络数据等）。</p>
+<p>如果我们想要异步执行（在当前代码之后）一个函数，但是要在更改被渲染或新事件被处理之前执行，那么我们可以使用 <code>queueMicrotask</code> 来对其进行安排（schedule）。</p>
+<p>这是一个与前面那个例子类似的，带有“计数进度条”的示例，但是它使用了 <code>queueMicrotask</code> 而不是 <code>setTimeout</code>。你可以看到它在最后才渲染。就像写的是同步代码一样：</p>
+<div id="tp67851aft" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:14,&quot;end&quot;:14}]" data-prism-highlighted="1">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="展示" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="https://zh.javascript.info/event-loop#" title="在沙箱中打开" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers  language-markup" tabindex="0"><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span><code class=" language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>progress<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">function</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 做繁重的任务的一部分 (*)</span>
+    <span class="token keyword">do</span> <span class="token punctuation">{</span>
+      i<span class="token operator">++</span><span class="token punctuation">;</span>
+      progress<span class="token punctuation">.</span>innerHTML <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">%</span> <span class="token number">1e3</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">1e6</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<em class="block-highlight">      <span class="token function">queueMicrotask</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span></em>
+    <span class="token punctuation">}</span>
+
+  <span class="token punctuation">}</span>
+
+  <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span></code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="zong-jie" href="https://zh.javascript.info/event-loop#zong-jie">总结</a></h2><p>更详细的事件循环算法（尽管与 <a href="https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model">规范</a> 相比仍然是简化过的）：</p>
+<ol>
+<li>从 <strong>宏任务</strong> 队列（例如 “script”）中出队（dequeue）并执行最早的任务。</li>
+<li>执行所有 <strong>微任务</strong>：
+<ul>
+<li>当微任务队列非空时：
+<ul>
+<li>出队（dequeue）并执行最早的微任务。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果有变更，则将变更渲染出来。</li>
+<li>如果宏任务队列为空，则休眠直到出现宏任务。</li>
+<li>转到步骤 1。</li>
+</ol>
+<p>安排（schedule）一个新的 <strong>宏任务</strong>：</p>
+<ul>
+<li>使用零延迟的 <code>setTimeout(f)</code>。</li>
+</ul>
+<p>它可被用于将繁重的计算任务拆分成多个部分，以使浏览器能够对用户事件作出反应，并在任务的各部分之间显示任务进度。</p>
+<p>此外，也被用于在事件处理程序中，将一个行为（action）安排（schedule）在事件被完全处理（冒泡完成）后。</p>
+<p>安排一个新的 <strong>微任务</strong>：</p>
+<ul>
+<li>使用 <code>queueMicrotask(f)</code>。</li>
+<li>promise 处理程序也会通过微任务队列。</li>
+</ul>
+<p>在微任务之间没有 UI 或网络事件的处理：它们一个立即接一个地执行。</p>
+<p>所以，我们可以使用 <code>queueMicrotask</code> 来在保持环境状态一致的情况下，异步地执行一个函数。</p>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type">Web Workers</span></div>
+            <div class="important__content"><p>对于不应该阻塞事件循环的耗时长的繁重计算任务，我们可以使用 <a href="https://html.spec.whatwg.org/multipage/workers.html">Web Workers</a>。</p>
+<p>这是在另一个并行线程中运行代码的方式。</p>
+<p>Web Workers 可以与主线程交换消息，但是它们具有自己的变量和事件循环。</p>
+<p>Web Workers 没有访问 DOM 的权限，因此，它们对于同时使用多个 CPU 内核的计算非常有用。</p>
+</div></div>
+</div></article></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="https://zh.javascript.info/selection-range" data-tooltip="选择（Selection）和范围（Range）"><span class="page__nav-text"><span class="page__nav-text-shortcut">Ctrl + <span class="page__nav-text-arr">←</span></span></span><span class="page__nav-text-alternate">上一节</span></a><a class="page__nav page__nav_next" href="https://zh.javascript.info/frames-and-windows" data-tooltip="Frame 和 window"><span class="page__nav-text"><span class="page__nav-text-shortcut">Ctrl + <span class="page__nav-text-arr">→</span></span></span><span class="page__nav-text-alternate">下一节</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">分享</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="https://zh.javascript.info/tutorial/map" data-action="tutorial-map"><span class="map__text">教程路线图</span></a></div></div></div><div class="comments formatted" id="comments"><div class="comments__header"><h2 class="comments__header-title"><a href="https://zh.javascript.info/event-loop#comments" name="comments">评论</a></h2><div class="comments__read-before"><span class="comments__read-before-link">在评论之前先阅读本内容…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>如果你发现教程有错误，或者有其他需要修改和提升的地方 — 请 <a href="https://github.com/javascript-tutorial/zh.javascript.info/issues">提交一个 GitHub issue</a> 或 pull request，而不是在这评论。</li><li>如果你对教程的内容有不理解的地方 — 请详细说明。</li><li>使用 <code>&lt;code&gt;</code> 标签插入只有几个词的代码，插入多行代码可以使用 <code>&lt;pre&gt;</code> 标签，对于超过 10 行的代码，建议你使用沙箱（<a href="https://plnkr.co/edit/?p=preview">plnkr</a>，<a href="https://jsbin.com/">JSBin</a>，<a href="http://codepen.io/">codepen</a>…）</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/zh.javascript.info\/event-loop","identifier":"\/event-loop"}); };</script><script>var disqus_shortname = "zh-javascript-info";</script><script>var disqus_enabled = true;</script></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer" style="top: 0px;"><button class="sidebar__toggle" data-sidebar-toggle=""></button><a class="map" href="https://zh.javascript.info/tutorial/map" data-action="tutorial-map" data-tooltip="教程路线图"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">章节</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/ui-misc">杂项</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">课程导航</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#shi-jian-xun-huan">事件循环</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#yong-li-1-chai-fen-cpu-guo-zai-ren-wu">用例 1：拆分 CPU 过载任务</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#yong-li-2-jin-du-zhi-shi">用例 2：进度指示</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#yong-li-3-zai-shi-jian-zhi-hou-zuo-yi-xie-shi-qing">用例 3：在事件之后做一些事情</a></li><li class="sidebar__navigation-link"><a class="sidebar__link sidebar__navigation-link_active" href="https://zh.javascript.info/event-loop#hong-ren-wu-he-wei-ren-wu">宏任务和微任务</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#zong-jie">总结</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="https://zh.javascript.info/event-loop#comments">评论</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">分享</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fzh.javascript.info%2Fevent-loop" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/zh.javascript.info/blob/master/2-ui/99-ui-misc/03-event-loop" rel="nofollow">在 GitHub 上编辑</a></div></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2022&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="https://zh.javascript.info/about">关于本项目</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="https://zh.javascript.info/about#contact-us">联系我们</a></li></ul></div><progress class="tutorial-progress sticky" data-sticky="" value="32" max="32" data-tooltip="第 32/32 节" style="position: fixed; top: 0px; left: 0px; z-index: 101; background: white; margin: 0px; width: 1266px;"></progress></body></html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="">失败</div>
+  <iframe src="http://127.0.0.1:8082/iframe/c1.html#iloveyou"></iframe>
+  <script>
+    window.onhashchange = function () {
+      //检测 hash 的变化,中间介 b 帮 c 传达的
+      console.log(location.hash);
+    }
+  </script>
+</body>
+
+</html>

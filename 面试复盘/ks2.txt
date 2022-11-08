@@ -1,0 +1,66 @@
+自我介绍
+
+项目，没啥特点面试官没兴趣
+
+listToTree，想用 Map 实现O(n)，没做出来，面试官引导了半个小时没做出来
+后来说要不让我重写一下 O(n2)，思路太乱了没写对
+
+问了下平常学习印象深刻的地方和面试官说说，说了看 vue 源码，讲了一下响应式
+
+反问
+
+补一下第二题代码：
+// O(n2)
+function listToTree (list) {
+  const tree = [];
+  for (let node of list) {
+    if (node.pid) {
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].id === node.pid) {
+          if (!list[i].child) {
+            list[i].child = [node]
+          } else {
+            // 实则是利用了引用类型的特性
+            // 当 push 到这个数组中时
+            // tree中相应的引用也会发生改变，因为指向的是同一个地址
+            list[i].child.push(node);
+          }
+        }
+      }
+    } else {
+      tree.push(node);
+    }
+  }
+  return tree;
+}
+
+
+// 面试后复盘写的，有问题可以提出讨论
+function listToTree (list) {
+  const tree = [];
+  const hash = new Map(); // hash 中应该存放子节点数组
+  for (let i = 0; i < list.length; i++) {
+    const node = list[i];
+    if (node.pid) {  // 如果这是个子节点
+      if (hash.has(node.pid)) {
+        // 该父节点存在子节点数组
+        // 1.有可能是子节点添加的，这种情况父节点上并没有相应的引用，所以加入到 hash 中临时的子节点数组中
+        // 2.也有可能是父节点自己添加的，这种情况父节点上有相应的引用，所以 push 到 hash 中相当于 push 到父节点的 child 中
+        hash.get(node.pid).push(node);
+      } else {
+        // 该子节点的父节点不存在子节点数组
+        // 初始化父节点的子节点数组
+        hash.set(node.pid, [node]);
+      }
+    } else {  // 这是个根节点
+      tree.push(node);  // 根节点直接推入就行了
+    }
+    if (hash.has(node.id))  // 先前已经遍历到了我的子节点
+      node.child = hash.get(node.id);
+    else {                // 先前没有遍历到我的子节点
+      node.child = [];    // 记住，保留引用关系很重要
+      hash.set(node.id, node.child);  // 这里保存的是一个引用关系需要重视
+    }
+  }
+  return tree;
+}

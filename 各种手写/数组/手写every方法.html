@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //一个是false就返回false
+      let arr = [1, 3, 4, 23, 14, 55];
+      // Array.prototype.myEvery = function (callbakc) {
+      //   for (let i = 0; i < this.length; i++) {
+      //     if (!callbakc(this[i], i, this)) {
+      //       return false;
+      //     }
+      //   }
+      //   return true;
+      // };
+      Array.prototype.myEvery = function (callback) {
+        for (let i = 0; i < this.length; i++) {
+          if (!callback(this[i], i, this)) {
+            return fale;
+          }
+        }
+        return false;
+      };
+
+      let n = arr.myEvery((item) => {
+        return item > 0;
+      });
+      console.log(n);
+    </script>
+  </body>
+</html>

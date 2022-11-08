@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //所有都是false才会返回false
+      //有一个对就对了
+
+      let arr = [1, 3, 4, 23, 14, 55];
+      // Array.prototype.mySome = function (callback) {
+      //   for (let i = 0; i < this.length; i++) {
+      //     if (callback(this[i], i, this)) {
+      //       return true;
+      //     }
+      //   }
+      //   return false;
+      // };
+
+      Array.prototype.mySome = function (callback) {
+        const length = this.length;
+        if (!length) return false;
+        for (let i = 0; i < length; i++) {
+          if (callback(this[i], i, this)) {
+            return true;
+          }
+        }
+        return false;
+      };
+      let n = arr.mySome((item) => {
+        return item > 100;
+      });
+      let m = [].some((item) => {
+        return item > 100;
+      });
+      console.log(n, m);
+    </script>
+  </body>
+</html>

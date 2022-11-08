@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      height: 400px;
+      width: 100vw;
+      border: 2px solid black;
+      display: flex;
+    }
+    .son:nth-child(1) {
+      width: 100px;
+      background-color: blue;
+    }
+    .son:nth-child(2) {
+      flex: 1;
+      background-color: red;
+    }
+    .son:nth-child(3) {
+      width: 200px;
+      background-color: pink;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div class="son"></div>
+      <div class="son"></div>
+      <div class="son"></div>
+    </div>
+    <script></script>
+  </body>
+</html>

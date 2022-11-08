@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 3, 4, 23, 14, 55];
+      Array.prototype.myReduce = function (callback, ...args) {
+        let start = 0,
+          pre;
+
+        if (args.length) {
+          //有参数的话pre等于参数第0项
+          pre = args[0];
+        } else {
+          //没参数的话，默认从数组0项开始
+          pre = this[0];
+          start = 1;
+        }
+        for (let i = start; i < this.length; i++) {
+          pre = callback(pre, this[i], i, this);
+        }
+        return pre;
+      };
+      let n = arr.myReduce((pre, cur) => {
+        console.log(pre, cur);
+        return pre + cur;
+      }, 10);
+      console.log(n);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div myIn="1"></div>
+    <div class="contentbox"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div name="bb"></div>
+    <div class="box"></div>
+    <div class="box1"></div>
+    <div xas="hhh"></div>
+    <div class="box2"></div>
+    <script>
+      function $attr(key, value) {
+        let elements = document.getElementsByTagName("*"),
+          arr = [];
+        //   [].forEach.call(elements,item=>{})
+        elements = Array.from(elements);
+        elements.forEach((item) => {
+          //=>存储的是当前元素key对于的属性值
+          let itemValue = item.getAttribute(key);
+          if (itemValue === value) {
+            arr.push(item);
+          }
+        });
+        return arr;
+      }
+      console.log($attr("class", "box"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 圣杯 -->
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #container {
+      margin-top: 20px;
+      /* overflow: hidden; */
+      padding-left: 200px;
+      padding-right: 200px;
+      height: 200px;
+      background-color: gray;
+    }
+
+    #container>div {
+      float: left;
+      height: 100%;
+    }
+
+    .center {
+      width: 100%;
+      background: red;
+    }
+
+    .left {
+      position: relative;
+      /* 2. */
+      left: -200px;
+      /* 1. */
+      margin-left: -100%;
+      width: 200px;
+      background: green;
+    }
+
+    .right {
+      /* 可以和左盒子一样通过 relative 定位来更改位置 */
+      /* position: relative; */
+      /* right: -200px; */
+      /* margin-left: -200px; */
+      width: 200px;
+      /* 也可以通过 margin-right 更改位置 */
+      margin-right: -200px;
+      background: blue;
+    }
+  </style>
+  <!-- 双飞翼 -->
+  <style>
+    .container {
+      /* overflow: hidden; */
+      height: 200px;
+    }
+
+    .container>div {
+      height: 100%;
+    }
+
+    .float {
+      float: left;
+    }
+
+    #main {
+      width: 100%;
+      background-color: gray;
+    }
+
+    #main-wrap {
+      margin: 0 200px 0 220px;
+      background-color: pink;
+      height: 100%;
+    }
+
+    #left {
+      position: relative;
+      width: 220px;
+      background-color: lightsalmon;
+      /* left: -200px; */
+      margin-left: -100%;
+    }
+
+    #right {
+      width: 200px;
+      background-color: lightskyblue;
+      margin-left: -200px;
+
+      /* margin-right: -200px;
+      position: relative;
+      left: -200px; */
+    }
+  </style>
+  <!-- flex -->
+  <style>
+    .wrap {
+      display: flex;
+      height: 200px;
+    }
+
+    .wrap .c {
+      flex: 1;
+      /* flex-grow: 0;
+      flex-shrink: 1;
+      flex-basis: auto; */
+      /* width: 100%; */
+      background-color: green;
+      order: 2;
+    }
+
+    .wrap .l,
+    .wrap .r {
+      /* 也可以用这个来固定宽 */
+      /* flex-basis: 300px; */
+      width: 300px;
+      background-color: red;
+    }
+
+    .l {
+      order: 1;
+    }
+
+    .r {
+      order: 3
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 圣杯 -->
+  <div class="content">
+    111
+  </div>
+  <div id="container" class="clearfix">
+    <div class="center">我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间我是中间</div>
+    <div class="left">我是左边</div>
+    <div class="right">我是右边</div>
+  </div>
+
+  <div class="container">
+    <!-- 双飞翼 -->
+    <div id="main" class="float">
+      <div id="main-wrap">main</div>
+    </div>
+    <div id="left" class="float">left</div>
+    <div id="right" class="float">right</div>
+  </div>
+
+  <div class="wrap">
+    <div class="c">111</div>
+    <div class="l"></div>
+    <div class="r"></div>
+  </div>
+</body>
+
+</html>

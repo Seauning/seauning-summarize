@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, 2, 3, 4, 5];
+      function reverse1(arr) {
+        return arr.reverse();
+      }
+      function reverse2(arr) {
+        const res = [];
+        for (let i = arr.length - 1; i >= 0; i--) {
+          res.unshift(arr[i]);
+        }
+        return res;
+      }
+      function reverse3(arr) {
+        let i = 0,
+          j = arr.length - 1;
+        while (i++ <= j--) {
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+      console.log(reverse1(arr));
+      console.log(reverse2(arr));
+      console.log(reverse3(arr));
+    </script>
+  </body>
+</html>

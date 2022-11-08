@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <style>
+    .container {
+      overflow: hidden;
+    }
+
+    .center,
+    .right {
+      padding-bottom: 10000000px;
+      margin-bottom: -10000000px;
+    }
+
+    .center {
+      float: left;
+      /* 需要间距时加 */
+      margin-right: 10px;
+      background-color: red;
+    }
+
+    .right {
+      /*开启bfc防止与浮动元素重叠*/
+      overflow: hidden;
+      background-color: skyblue;
+    }
+  </style> -->
+  <!-- <style>
+    .container {
+      display: flex;
+    }
+
+    .center {
+      padding: 10px;
+      width: 100px;
+      margin-right: 10px;
+      background-color: yellow;
+    }
+
+    .center>p {
+      /*强制一行显示*/
+      white-space: nowrap;
+      /*超出部分隐藏*/
+      overflow: hidden;
+      /*溢出部分省略号代替*/
+      text-overflow: ellipsis;
+    }
+
+    .right {
+      flex: 1;
+      background-color: red;
+    }
+  </style> -->
+  <style>
+    .parent {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .left,
+    .right {
+      display: table-cell;
+      background-color: blue;
+    }
+
+    .left {
+      /* width: 100px; */
+      background-color: red;
+      border-right: 50px solid transparent;
+      background-clip: padding-box;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div class="container">
+    <div class="center">
+      <p>111111111111</p>
+      <p>111111111111</p>
+      <p>111</p>
+      <p>111</p>
+    </div>
+    <div class="right">
+      <p>111</p>
+      <p>111</p>
+      <p>111</p>
+      <p>111</p>
+      <p>111</p>
+    </div>
+  </div> -->
+  <div class="parent">
+    <div class="left">
+      <p>leftleftleftleftleftleftleft</p>
+    </div>
+    <div class="right">
+      <p>right</p>
+      <p>right</p>
+    </div>
+  </div>
+</body>
+
+</html>

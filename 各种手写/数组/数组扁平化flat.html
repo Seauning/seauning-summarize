@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let arr = [1, [2, [3, 4, 5]]];
+
+      const flat = (arr, depth = 1) => {
+        const res = [];
+        for (const item of arr) {
+          if (Array.isArray(item) && depth > 0) {
+            res.push(...flat(item, depth - 1));
+          } else {
+            res.push(item);
+          }
+        }
+        return res;
+      };
+      console.log(flat(arr, 1));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./hand.js" type="text/javascript"></script>
+  <script>
+    const vm = new Vue({
+      el: '',
+      data () {
+        return {
+          name: '1'
+        }
+      },
+      watch: {
+        name (newV, oldV) {
+
+        },
+        ['name']: {
+          handle () {
+
+          },
+          immediate,
+          deep
+        }
+      }
+    })
+    const p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('ok')
+        // reject('failed')
+        // // 抛出异常
+        // throw 'err'
+      }, 1000)
+    })
+    /*
+     console.log(p);
+    const result = p.then(
+      v => {
+        // alert(v);
+        console.log(v);
+        return '11'
+        // return new Promise((resolve, reject) => {
+        //   // resolve(1222)
+        //   reject('ffff')
+        // })
+        // 抛出异常
+        // throw 'FFFF'
+      },
+      err => {
+        // alert(err);
+        console.warn(err);
+        // throw 'ERROR'
+      })
+    // console.log(p);
+    console.log(result); */
+
+    // p.then(
+    //   v => {
+    //     console.log(v);
+    //   },
+    //   err => {
+    //     console.warn(err);
+    //   })
+
+    // const result2 = p.catch(err => {
+    //   // console.log(err);
+    //   // throw 'ERR'
+    //   // return new Promise((res, rej) => {
+    //   //   rej('error')
+    //   // })
+    // })
+    // console.log(result2);
+
+    // 值传递
+    /* p.then()
+      .then(v => {
+        console.log(111);
+        // throw 'EEEE'
+      }).then(v => {
+        console.log(222);
+      }).then(v => {
+        console.log(333);
+      }).catch(e => {
+        console.warn(e);
+      }) */
+
+    /* console.log(Promise.resolve('ok'));
+    console.log(Promise.resolve(new Promise((res, rej) => {
+      // res('success')
+      // rej('err')
+      throw 'error'
+    })));
+    console.log(Promise.resolve(Promise.resolve('ohhhhhh'))); */
+
+    /* console.log(Promise.reject('eee'));
+    console.log(Promise.reject(new Promise((res, rej) => {
+      rej('success')
+      // rej('err')
+      // throw 'error'
+    })));
+    console.log(Promise.reject(Promise.reject('ohhhhhh'))); */
+
+    /* console.log(Promise.all([
+      Promise.resolve(new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('ok')
+        }, 3000)
+      })),
+      // Promise.resolve('ohhh'),
+      Promise.resolve(new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('ohhh')
+        }, 3000)
+      })),
+      Promise.resolve('success!!')
+    ])); */
+
+    /* console.log(Promise.race([
+      Promise.resolve(new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('ok')
+        }, 3000) 
+      })),
+      // Promise.resolve('ohhh'),
+      Promise.resolve(new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('ohhh')
+        }, 2000)
+      })),
+      Promise.resolve('success!!')
+    ])); */
+
+    /*
+     // 测试 promise 是否异步执行
+     const p2 = new Promise((resolve, reject) => {
+      resolve(222)
+      // reject(444)
+      console.log(111);
+    })
+    p2.then(v => {
+      console.log(v);
+    }).catch(v => {
+      console.log(v);
+    })
+    console.log(333); */
+
+  </script>
+</head>
+
+<body>
+  <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    .container {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 500px;
+      height: 200px;
+      margin: auto;
+    }
+
+    .fronted {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background-color: pink;
+      z-index: 3;
+      transform: translateZ(0);
+    }
+
+    .after {
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      z-index: 5;
+    }
+  </style>
+  <div class="container">
+    <div class="fronted"></div>
+    <div class="after"></div>
+  </div>
+</body>
+
+</html>

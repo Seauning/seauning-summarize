@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //填充数组
+      // Array.prototype.myFill = function (initValue, start = 0, end) {
+      //   //end可以小于0,所以要进行一个判断
+      //   end = end < 0 ? this.length + end : end;
+      //   for (let i = start; i < end; i++) {
+      //     this[i] = value;
+      //   }
+      //   return this;
+      // };
+
+      Array.prototype._Fill = function (value, start = 0, end) {
+        end = end < 0 ? this.length + end : end;
+        for (let i = start; i < end; i++) {
+          this[i] = value;
+        }
+        return this;
+      };
+      let arr = [3, 3, 21, 3, 14, 12, 4, 1, 2];
+      console.log(arr._Fill(1, 3, 5));
+    </script>
+  </body>
+</html>

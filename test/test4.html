@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ul .a:last-of-type {
+      background-color: red;
+    }
+
+    .tb {
+      margin-top: 5px;
+      border-collapse: collapse;
+    }
+
+    .tb td {
+      padding: 10px;
+      border: 1px solid #000;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    .tb td:hover {
+      box-shadow: 1px 2px 5px 2px pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="btn">点击
+    <div id="btn2" style="margin: 100px;">
+      点击2
+    </div>
+  </div>
+  <div class="ul">
+    nth-of-type、nth-child比较
+    <div class="a">1</div>
+    <div class="a">2
+      <div class="a">7</div>
+      <div class="b">5</div>
+      <div class="a">7</div>
+      <div class="b">6</div>
+      <div class="a">8</div>
+    </div>
+    <div class="a">3</div>
+    <div class="a">4</div>
+  </div>
+  <table class="tb">
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+  </table>
+  <br />
+  <script>
+    const btn = document.getElementById('btn')
+    const btn2 = document.getElementById('btn')
+    btn2.addEventListener('click', () => { console.log('dd') }, true)
+    btn.addEventListener('click', () => { console.log('bb') }, true)
+    btn2.addEventListener('click', () => { console.log('cc') })
+    btn.addEventListener('click', () => { console.log('aa') })
+
+  </script>
+</body>
+<script type="module">
+  import { dom2json } from './各种手写/嵌套结构遍历.js'
+  window.addEventListener('DOMContentLoaded', function () {
+    const tree = {
+      tag: 'DIV',
+      attrs: {
+        id: 'app'
+      },
+      children: [
+        {
+          tag: 'SPAN',
+          children: [
+            {
+              tag: 'A', attrs: {
+                href: 'https://www.baidu.com'
+              }, children: [123]
+            }
+          ]
+        },
+        {
+          tag: 'SPAN',
+          children: [
+            { tag: 'A', children: ['123'] },
+            { tag: 'A', children: [] }
+          ]
+        }
+      ]
+    }
+    function produce (tree) {
+      // 如果是数字类型转换为字符串,走下一个if
+      if (typeof tree === 'number') {
+        tree = String(tree);
+      }
+      // 如果是字符串类型生成并返回文本节点
+      if (typeof tree === 'string') {
+        return document.createTextNode(tree);
+      }
+      // 否则生成一个结点继续递归
+      let node = document.createElement(tree.tag);
+      if (tree.attrs) {
+        for (let key in tree.attrs) {
+          node.setAttribute(key, tree.attrs[key])
+        }
+      }
+      if (tree.children) {
+        for (let child of tree.children) {
+          node.appendChild(produce(child))
+        }
+      }
+      return node;
+    }
+    document.body.appendChild(produce(tree))
+    console.log(dom2json(document.querySelector('#app')));
+  })
+</script>
+
+<script>
+  // console.log(a);
+
+  // var a = 1 // a 被提升到全局作用域头部
+  // // a = 1// 报错 a 未定义
+
+  // function test () {
+  //   b = '1111'; // b 被提升为全局变量
+  // }
+  // test();
+  // console.log(b);
+
+  // function foo () {
+  //   console.log(a);
+  // }
+  // foo(); // ???
+  // var a = 1;
+  // a = 1;
+
+  // console.log(foo);
+  // function foo () {
+  //   console.log(a);
+  //   var a = 1;
+  //   // a = 1;
+  //   return 1;
+  // }
+  // foo(); // ???
+  // // 在这句赋值语句前 foo 一直都是一个函数
+  // // 因为变量的声明不会影响函数声明以及函数参数
+  // // 但是执行到该语句时，值会覆盖原本的函数
+  // var foo = 2;
+  // console.log(foo);
+
+</script>
+
+<script>
+  function SuperType () {
+    this.property = true;
+  }
+
+  SuperType.prototype.getSuperValue = function () {
+    return this.property;
+  }
+
+  function SuperType () {
+    this.colors = ["red", "blue", "green"];
+    this.a = 1;
+  }
+  function SubType () { }
+
+  SubType.prototype = new SuperType();
+
+  var instance1 = new SubType();
+  instance1.colors.push("black");
+  console.log(instance1.colors); //"red,blue,green,black"
+
+  var instance2 = new SubType();
+  console.log(instance2.colors); //"red,blue,green,black"
+  ++instance1.a;
+  console.log(instance1.a);
+
+  console.log(instance1.colors === instance2.colors); // true
+  console.log(instance2.a);
+
+</script>
+<script>
+  let obj = {
+    data: [4, 2, 3],
+    [Symbol.iterator] () {
+      let i = 0;
+      const _this = this;
+      return {
+        next () { // 要么将这个函数写成箭头函数的形式
+          const done = i > 2;
+          const value = done ? undefined : _this.data[i++];
+          return {
+            value,
+            done,
+          };
+        },
+        return () {
+          console.log(`提前退出`);
+          return {
+            done: false
+          }
+        }
+      }
+    }
+  }
+  // const iterator = obj[Symbol.iterator]()
+  // console.log(iterator.next().value);
+  // console.log(iterator.next().value);
+  // console.log(iterator.next().value);
+  // console.log([...obj]);
+  for (let v of obj) {
+    if (v === 2) break
+    console.log(v);
+  }
+
+</script>
+
+</html>

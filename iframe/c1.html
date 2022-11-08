@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    window.onhashchange = function () {
+      // c 拿到 a 发送来的 hash
+      console.log(location.hash);
+      let iframe = document.createElement('iframe');
+      // c 向 b 传达了向发送给 a 的信息
+      iframe.src = 'http://127.0.0.1:5500/iframe/b1.html#hello';
+      document.body.appendChild(iframe)
+    }
+  </script>
+</body>
+
+</html>

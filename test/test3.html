@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .main {
+      height: 500px;
+    }
+
+    #container {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #content {
+      width: calc(100% + 17px);
+      height: calc(100% + 17px);
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div id="container">
+      <div id="content">
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+        <p>1111</p>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    const arr = [4, 3, 4, 3];
+    const merge = (arr1, arr2) => {
+      let res = [];
+      let i = 0, j = 0
+      for (; i < arr1.length && j < arr2.length;) {
+        if (arr1[i] > arr2[j]) {
+          res.push(arr2[j++]);
+        } else {
+          res.push(arr1[i++]);
+        }
+      }
+      if (i < arr1.length) {
+        res.push(...arr1.slice(i));
+      } else {
+        res.push(...arr2.slice(j));
+      }
+      return res;
+    }
+
+    let mergeSort = (arr, start, end) => {  // 左闭右闭区间
+      console.log(start, end);
+
+      // 这个条件是必要的,否则会一直循环,注意返回的是一个数组
+      // 左闭右闭区间的终止条件是这样的 [0] 这时候应该返回 [0] 
+      if ((end - start + 1) < 2) return arr.slice(start, end + 1)
+      const mid = start + ((end - start) >> 1);
+      const res = merge(mergeSort(arr, start, mid), mergeSort(arr, mid + 1, end));
+
+      return res
+    }
+    console.log(mergeSort(arr, 0, arr.length - 1));
+
+    mergeSort = (arr, start, end) => {  // 左闭右开区间
+      console.log(start, end);
+      // 这个条件是必要的,否则会一直循环,注意返回的是一个数组
+      // 左闭右开区间的终止条件是这样的 [0, 1) 这时候应该返回 [0] 
+      if ((end - start) < 2) return arr.slice(start, end)
+      const mid = start + ((end - start) >> 1);
+      const res = merge(mergeSort(arr, start, mid), mergeSort(arr, mid, end));
+      return res
+    }
+    console.log(mergeSort(arr, 0, arr.length));
+  </script> -->
+  <!-- <script type="module">
+    import MyPromise from './各种手写/异步/promise-手写2.js'
+
+    const obj = {
+      then (resolve, reject) {
+        console.log('thenable');
+        resolve(4);
+      }
+    }
+
+    Promise.resolve(obj).then((v) => {
+      console.log(v);
+    })
+
+    Promise.resolve(2).then((v) => {
+      console.log(v);
+      return v + 1;
+    }).then(res => {
+      console.log(res);
+    })
+
+
+
+  </script> -->
+  <script type="module">
+    import MyPromise from './各种手写/异步/promise-手写2.js'
+
+    Promise.resolve(13).finally(() => {
+      console.log('finally');
+      throw new Error('eeee');
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((reason) => {
+        console.log(reason);
+      })
+
+    const thenableObj = {
+      then (resolve, reject) {
+        console.log('thenable');
+        reject('error')
+      }
+    }
+
+    Promise.resolve(thenableObj)
+      .then()
+      .catch(reason => {
+        console.error('!!!' + reason);
+      })
+
+  </script>
+</body>
+
+</html>

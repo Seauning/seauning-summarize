@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="../img/vuex.webp" id="img1" ondragover="event.preventDefault()">
+  </img>
+  <img ondragover="event.preventDefault()" id="img2">
+  <div draggable="true" ondragstart="dragStart">123123123</div>
+  <script>
+
+    window.addEventListener('load', function () {
+      const p = document.querySelector('#img1');
+      const p2 = document.querySelector('#img2');
+      function dragDeleteImg (event) {
+        event.target.removeAttribute('src');
+      }
+      function dragStart (e) {
+        event.dataTransfer.setData('text/plain', 'This text may be dragged')
+      }
+
+      p.addEventListener('dragend', dragDeleteImg)
+      p2.addEventListener('dragend', dragDeleteImg)
+      p.addEventListener('drop', onDrop)
+      p2.addEventListener('drop', onDrop)
+      function onDrop (event) {
+        const data = event.dataTransfer.getData('text/uri-list')
+        event.target.src = data;
+        event.preventDefault();
+      }
+    })
+
+  </script>
+</body>
+
+</html>

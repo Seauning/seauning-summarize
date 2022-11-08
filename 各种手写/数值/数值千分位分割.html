@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //实现千分位分割
+      // function format(number) {
+      //   let arr = number.toString().split(".");
+      //   let zhengshu = arr[0].split("");
+      //   let xiaoshu = arr[1] || "";
+      //   let all = "";
+      //   console.log(zhengshu);
+      //   zhengshu.reverse().forEach((item, index) => {
+      //     if (index !== 0 && index % 3 == 0) {
+      //       all = item + "," + all;
+      //     } else {
+      //       all = item + all;
+      //     }
+      //   });
+      //   return all + (xiaoshu ? "." + xiaoshu : "");
+      // }
+
+      function Format(number) {
+        let arr = number.toString().split(".");
+        let zhengshu = arr[0].split("");
+        let xiaoshu = arr[1] || "";
+        let all = "";
+        zhengshu.reverse().forEach((item, index) => {
+          if (index !== 0 && index % 3 === 0) {
+            all = item + "," + all;
+          } else {
+            all = item + all;
+          }
+        });
+        return all + '.' + xiaoshu
+      }
+      console.log(Format(1231223124.123));
+    </script>
+  </body>
+  1
+</html>

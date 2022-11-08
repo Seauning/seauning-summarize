@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //第一种:set 解决
+      function unique(obj) {
+        return [...new Set(obj)];
+      }
+
+      //第二种:循环+indexof 解决
+      //   function unique(obj) {
+      //     let arr = [];
+      //     for (let i in obj) {
+      //       if (arr.indexOf(obj[i]) == -1) {
+      //         arr.push(obj[i]);
+      //       }
+      //     }
+      //     return arr;
+      //   }
+
+      //第三种:循环+includes 解决
+      //   function unique(obj) {
+      //     let arr = [];
+      //     for (let i in obj) {
+      //       if (!arr.includes(obj[i])) {
+      //         arr.push(obj[i]);
+      //       }
+      //     }
+      //     return arr;
+      //   }
+      //   function quchong3(obj) {}
+
+      //第四种，通过对象实现数组去重
+      // function unique(ary) {
+      //   let obj = {};
+      //   for (let i = 0; i < ary.length; i++) {
+      //     let item = ary[i];
+      //     if (typeof obj[item] !== "undefined") {
+      //       ary[i] = ary[ary.length - 1];
+      //       ary.length--;
+      //       i--;
+      //       continue;
+      //     }
+      //     obj[item] = item;
+      //   }
+      //   obj = null;
+      //   return ary;
+      // }
+
+      //方法五，链式写法实现数组去重
+      // ~(function () {
+      //   function myUnique() {
+      //     let obj = {};
+      //     for (let i = 0; i < this.length; i++) {
+      //       let item = this[i];
+      //       if (typeof obj[item] !== "undefined") {
+      //         this[i] = this[this.length - 1];
+      //         this.length--;
+      //         i--;
+      //         continue;
+      //       }
+      //       obj[item] = item;
+      //     }
+      //     obj = null;
+      //     return this;
+      //   }
+
+      //   Array.prototype.myUnique = myUnique;
+      // })();
+      // function unique(ary) {
+      //   let obj = {};
+      //   for (let i = 0; i < ary.length; i++) {
+      //     let item = ary[i];
+      //     if (typeof obj[item] !== "undefined") {
+      //       ary[i] = ary[ary.length - 1];
+      //       ary.length--;
+      //       i--;
+      //       continue;
+      //     }
+      //     obj[item] = item;
+      //   }
+      //   obj = null;
+      //   return ary;
+      // }
+      // console.log(unique());
+      //可以去除空对象
+      // function unquie(arr) {
+      //   let index = 0;
+      //   let res = [];
+      //   for (let key of arr) {
+      //     if (JSON.stringify(key) != "{}" && !res.includes(key)) {
+      //       res.push(key);
+      //     } else if (JSON.stringify(key) != "{}") {
+      //       index == 0 ? res.push({}) : null;
+      //       index++;
+      //     }
+      //   }
+      //   return res;
+      // }
+      console.log(unique([1, 1, 1, 2, 2, 2]));
+    </script>
+  </body>
+</html>

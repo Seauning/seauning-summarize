@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 1.三道杠 */
+    .icon-menu1 {
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      padding: 4px 0;
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+      background-color: currentColor;
+      background-clip: content-box;
+    }
+
+    /* 2.三道杠 */
+    .icon-menu2 {
+      display: inline-block;
+      width: 15px;
+      height: 2px;
+      border-top: 6px double;
+      border-bottom: 2px solid;
+    }
+
+    .icon-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      padding: 1px;
+      border: 2px solid;
+      border-radius: 50%;
+      background-color: currentColor;
+      background-clip: content-box;
+    }
+
+    .box {
+      /* box 盒子宽高 2:1 ，而不是 1:1 ，因为 上下 margin 被合并为一份 */
+      /* margin 合并计算：正正取大值，正负值相加，负负取取小值 */
+      background-color: olive;
+      overflow: hidden;
+    }
+
+    .box>div {
+      margin: 50%;
+    }
+
+    .box1 {
+      height: 50px;
+    }
+
+    .box1>div {
+      /* width: 100%; */
+      /* 因为 块级元素宽默认 100% ，所以 margin: auto; 不加一样，已经满足了上面的条件 */
+      /* margin: auto; */
+      background: lightgreen;
+    }
+
+    .box1>div:nth-child(1) {
+      float: left;
+      width: 100px;
+      height: 30px;
+      background-color: skyblue;
+    }
+
+    .box1>div:nth-child(2) {
+      margin-left: 100px;
+      height: 50px;
+    }
+
+    /* 背景色绘制加号 */
+    .add {
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      position: relative;
+    }
+
+    .add:before {
+      content: "";
+      background: #ccc;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 10px;
+      height: 20px;
+      width: 2px;
+    }
+
+    .add:after {
+      content: "";
+      background: #ccc;
+      display: block;
+      position: absolute;
+      top: 9px;
+      left: 1px;
+      width: 20px;
+      height: 2px;
+    }
+
+    .add:hover {
+      border-color: #06C;
+      /* 修改 */
+    }
+
+    .add:hover:before,
+    .add:hover:after {
+      background: #06C;
+      /* 修改 */
+    }
+
+    /* 边框绘制加号 */
+    .add1 {
+      display: inline-block;
+      position: relative;
+      height: 20px;
+      width: 20px;
+      color: #ccc;
+    }
+
+    .add1:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 8px;
+      width: 20px;
+      border-bottom: 4px solid;
+    }
+
+    .add1:after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 8px;
+      height: 20px;
+      border-right: 4px solid;
+    }
+
+    .add1:hover {
+      color: #06C;
+      /* 修改 */
+    }
+  </style>
+</head>
+
+<body>
+  <span class="icon-menu1"></span>
+  <span class="icon-menu2"></span>
+  <span class="icon-dot"></span>
+  <!-- <div class="box">
+    <div></div>
+  </div> -->
+  <!-- <div class="box1">
+    <div></div>
+    <div></div>
+  </div> -->
+  <span class="add"></span>
+  <span class="add1"></span>
+</body>
+
+</html>

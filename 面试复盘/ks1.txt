@@ -1,0 +1,37 @@
+css盒模型：ie盒模型border-box、标准盒模型content-box
+
+css动画：animation-duration、animation-timing-fucntion、animal-delay、animation-iteration-count、animation-direction
+animation-name 配合 keyFrames
+
+原型原型链
+
+new的过程
+
+浏览器输入url到渲染的整个过程(详细讲了)
+
+DNS解析的迭代递归查询
+
+浏览器事件循环、node事件循环(node不大了解没答好)
+
+最长前缀匹配（自己好蠢这题做了十几分钟，n2被自己写成n3，简单题啊简单题！！）
+
+flat 手写
+
+项目中用的 vue-router
+
+以及权限验证 token
+
+defineProperty 和 proxy
+
+vue如何对数组进行监听
+
+考察了个 getter
+Object.defineProperty(obj, 'a', {  })
+if(a === 1 && a === 2 && a === 3) {	
+	console.log(1);
+}
+有没有办法输出 1
+
+composition API 中 setup 的是哪个生命周期
+
+如何在页面初次渲染完毕对 dom 元素作修改

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      position: relative;
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+      background-color: skyblue;
+      /* transition: transform 1s ease-out; */
+      animation: trans 1s ease-out infinite alternate;
+    }
+
+    @keyframes trans {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(180deg);
+      }
+    }
+
+    span:hover {
+      will-change: transform;
+    }
+
+    span:active {
+      transform: rotate(180deg);
+    }
+
+    .father {
+      margin-top: 10px;
+      width: 100px;
+      transition: opacity 1s linear;
+    }
+
+    .father:hover>.child {
+      will-change: opacity;
+    }
+
+    .child {
+      position: relative;
+      z-index: 1;
+      color: #000;
+      opacity: 0.5;
+    }
+
+    .child:hover {
+      opacity: 1;
+    }
+
+    .opc {
+      width: 10px;
+      margin-top: 10px;
+      height: 10px;
+      background-color: pink;
+      opacity: 0.8;
+    }
+
+    .a {
+      /* 不在同一个合成层时就不会互相影响 */
+      position: relative;
+      z-index: 0;
+      /* 因为 mt 的值不同也可能导致不同的隐式提升现象*/
+      margin-top: 5px;
+      margin-top: 10px;
+      width: 100%;
+      height: 10px;
+      background-color: lightgreen;
+      opacity: 0.5;
+    }
+
+    .c {
+      position: relative;
+      z-index: 1;
+      /* 为 5px 时并未发生隐式提升，所以具体要由层叠上下文来分析*/
+      margin-top: 5px;
+      height: 10px;
+      background-color: red;
+    }
+
+    .d {
+      position: relative;
+      z-index: 1;
+
+      /* 为 10px 时发生了隐式提升，和 .a 相同，具体要由层叠上下文来分析*/
+      margin-top: 10px;
+      height: 10px;
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <span href="">旋转</span>
+  <div class="father">
+    <i class="child">topink</i>
+  </div>
+  <div class="opc"></div>
+  <div class="a"></div>
+  <div class="a"></div>
+  <div class="a"></div>
+  <div class="a"></div>
+  <div class="a"></div>
+  <div class="c"></div>
+  <div class="d"></div>
+</body>
+
+</html>

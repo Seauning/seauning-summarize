@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // ~(function () {
+      //   function check(n) {
+      //     n = Number(n);
+      //     return isNaN(n) ? 0 : n;
+      //   }
+      //   function add(num) {
+      //     n = check(n);
+      //     return this + num;
+      //   }
+      //   function minus(num) {
+      //     n = check(n);
+      //     return this - num;
+      //   }
+      //   Number.prototype.add = add;
+      //   Number.prototype.minus = minus;
+      // })();
+
+      (function () {
+        function changeOtherToNumber(n) {
+          n = Number(n);
+          return isNaN(n) ? 0 : n;
+        }
+        Number.prototype.add = function (num) {
+          n = changeOtherToNumber(num);
+          return this + n;
+        };
+        Number.prototype.minus = function (num) {
+          n = changeOtherToNumber(num);
+          return this - num;
+        };
+      })();
+      console.log((5).add(3).minus(2));
+    </script>
+  </body>
+</html>

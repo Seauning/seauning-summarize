@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .parent {
+      /*给父级拓宽20px*/
+      margin-right: -20px;
+    }
+
+    .child {
+      float: left;
+      width: 25%;
+      /*每个子项给出20px空间作间隙*/
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="child">123</div>
+    <div class="child">123</div>
+    <div class="child">123</div>
+    <div class="child">123</div>
+  </div>
+</body>
+
+</html>

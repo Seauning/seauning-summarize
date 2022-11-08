@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 类数组转换为数组的方法有这样几种：
+
+      // 通过 call 调用数组的 slice 方法来实现转换
+
+      Array.prototype.slice.call(arrayLike);
+
+      // 通过 call 调用数组的 splice 方法来实现转换
+
+      Array.prototype.splice.call(arrayLike, 0);
+
+      // 通过 apply 调用数组的 concat 方法来实现转换
+
+      Array.prototype.concat.apply([], arrayLike);
+
+      // 通过 Array.from 方法来实现转换
+
+      Array.from(arrayLike);
+
+      // 通过 解构重新赋值的方式
+      [...Array];
+    </script>
+  </body>
+</html>

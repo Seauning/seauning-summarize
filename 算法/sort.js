@@ -106,7 +106,7 @@ function quickSort (arr) {
       while (base >= arr[i] && i < j) i++  // i 是分界元素左侧开始，第一个大于分界元素的元素下标
       arr[j] = arr[i]
     }
-    arr[i] = base
+    arr[i] = base;  // 这里如果为 i ，这下面两个 sort 是相对 i 缩小，如果为 j 就相对 j 缩小
     sort(s, i - 1)
     sort(i + 1, e)
   }

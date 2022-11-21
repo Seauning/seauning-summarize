@@ -310,6 +310,12 @@ JavaScript 中 Number.MAX_SAFE_INTEGER 表示最⼤安全数字，计算结果�
 
 ## 20.JS 内存管理机制
 
+## 21. JS 进制转换方法
+
+1. parseInt(string, radix(进制))，传入一个字符串，将低进制转为高进制
+
+2. toString(radix)，将十进制转为任意进制
+
 ## 21. JS 基本数据类型和引用数据类型在内存中存储方式
 
 大多数说法，基本数据类型如 number、string、boolean 存放在栈中，而引用数据类型存放在堆中。

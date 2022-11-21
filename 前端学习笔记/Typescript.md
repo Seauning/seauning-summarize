@@ -8,7 +8,7 @@
 
 [TypeScript Overview](https://www.tutorialsteacher.com/typescript/typescript-overview)
 
-## typescript?
+## 什么是 Typescript
 
 Typescript 是 Javascript 的超集，Javascript 程序的静态检查器，一个在代码运行前的工具（静态）并确保程序的类型正确（类型检查）。
 
@@ -671,7 +671,7 @@ js 不允许 this 作为参数， ts 则可以通过 this 声明 this 的类型
 ```ts
 interface User {
   id: number;
-  admin: boolean;-
+  admin: boolean;
 }
 
 // 声明 getDB
@@ -2363,3 +2363,26 @@ type cases = [
     Expect<Equal<MinusOneByRecursion2<2000>, 1999>>
 ];
 ```
+
+# 面试篇
+
+## 说说你对 typescript 中接口 interface 的理解
+
+ts 中的接口是一系列属性和方法的`声明`，是同特征属性和方法的集合，需要由具体的`类`来实现。
+
+## type 和 interface 的区别
+
+- interface 可以通过 extends 关键字扩展属性，type 只能通过交叉类型扩展
+
+- interface 可以合并声明，如果重复声明的话是在原来的类型上新增属性，而 type 重复声明会报错
+
+- type 可以定义类型别名，可以通过 typeof 操作符定义，可以声明联合类型、元组类型，但是 interface不行
+
+    ```typescript
+    type myString = string;
+    type myType = typeof someObj;
+    type unionType = myType1 | myType2;
+    type yuanzu = [myType1, myType2];
+    ```
+
+[参考](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces)

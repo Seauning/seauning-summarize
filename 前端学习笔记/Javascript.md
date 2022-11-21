@@ -312,7 +312,7 @@ JavaScript 中 Number.MAX_SAFE_INTEGER 表示最⼤安全数字，计算结果�
 
 ## 21. JS 进制转换方法
 
-1. parseInt(string, radix(进制))，传入一个字符串，将低进制转为高进制
+1. parseInt(string, radix(进制))，传入一个字符串，指定 string 是几进制，将其转为十进制
 
 2. toString(radix)，将十进制转为任意进制
 

@@ -1140,6 +1140,8 @@ HTML 中，除了图像、超链接以及选中的文本默认可以拖拽，其
 
 ## 行内元素、块元素、行内块元素
 
+[细究内联元素](https://zhuanlan.zhihu.com/p/31645001)
+
 - 行内元素：a b span select strong label
 
 - 块级元素：div ul ol li dl dt dd h1 h2 h3 h4 h5 h6 p
